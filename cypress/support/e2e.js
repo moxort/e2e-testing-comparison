@@ -7,11 +7,7 @@
 
 
 // Initialize the global variable
-global.TODO_ITEMS = [
-    'Book doctor appointment',
-    'Buy birthday gift for Mom',
-    'Find place for vacation',
-];
+
 //
 // You can change the location of this file or turn off
 // automatically serving support files with the
