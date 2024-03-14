@@ -38,10 +38,8 @@ npm run report:playwright
 This command generates a report of the last test run and opens it in your default web browser.
 ### Puppeteer
 
-[//]: # (To run Cypress tests in headless&#40;in cli&#41; mode, use the following command:)
+To run Puppeteer tests in headless(in cli) mode, use the following command:
 
-[//]: # (```bash)
-
-[//]: # (npm install)
-
-[//]: # (```)
+```bash
+node puppeteerScript.js
+```
