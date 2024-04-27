@@ -41,5 +41,5 @@ This command generates a report of the last test run and opens it in your defaul
 To run Puppeteer tests in headless(in cli) mode, use the following command:
 
 ```bash
-node puppeteerScript.js
+node puppeteerScript.spec.js
 ```

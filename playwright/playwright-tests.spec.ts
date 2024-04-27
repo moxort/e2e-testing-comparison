@@ -10,6 +10,34 @@ const TODO_ITEMS = [
     'Find place for vacation'
 ];
 
+async function createDefaultTodos(page: Page) {
+    // create a new todo locator
+    const newTodo = page.getByPlaceholder('What needs to be done?');
+
+    for (const item of TODO_ITEMS) {
+        await newTodo.fill(item);
+        await newTodo.press('Enter');
+    }
+}
+
+async function checkNumberOfTodosInLocalStorage(page: Page, expected: number) {
+    return await page.waitForFunction(e => {
+        return JSON.parse(localStorage['react-todos']).length === e;
+    }, expected);
+}
+
+async function checkNumberOfCompletedTodosInLocalStorage(page: Page, expected: number) {
+    return await page.waitForFunction(e => {
+        return JSON.parse(localStorage['react-todos']).filter((todo: any) => todo.completed).length === e;
+    }, expected);
+}
+
+async function checkTodosInLocalStorage(page: Page, title: string) {
+    return await page.waitForFunction(t => {
+        return JSON.parse(localStorage['react-todos']).map((todo: any) => todo.title).includes(t);
+    }, title);
+}
+
 test.describe('New Todo', () => {
     test('should allow me to add todo items', async ({ page }) => {
         // create a new todo locator
@@ -333,9 +361,6 @@ test.describe('Persistence', () => {
 test.describe('Routing', () => {
     test.beforeEach(async ({ page }) => {
         await createDefaultTodos(page);
-        // make sure the app had a chance to save updated todos in storage
-        // before navigating to a new view, otherwise the items can get lost :(
-        // in some frameworks like Durandal
         await checkTodosInLocalStorage(page, TODO_ITEMS[0]);
     });
 
@@ -408,30 +433,4 @@ test.describe('Routing', () => {
     });
 });
 
-async function createDefaultTodos(page: Page) {
-    // create a new todo locator
-    const newTodo = page.getByPlaceholder('What needs to be done?');
 
-    for (const item of TODO_ITEMS) {
-        await newTodo.fill(item);
-        await newTodo.press('Enter');
-    }
-}
-
-async function checkNumberOfTodosInLocalStorage(page: Page, expected: number) {
-    return await page.waitForFunction(e => {
-        return JSON.parse(localStorage['react-todos']).length === e;
-    }, expected);
-}
-
-async function checkNumberOfCompletedTodosInLocalStorage(page: Page, expected: number) {
-    return await page.waitForFunction(e => {
-        return JSON.parse(localStorage['react-todos']).filter((todo: any) => todo.completed).length === e;
-    }, expected);
-}
-
-async function checkTodosInLocalStorage(page: Page, title: string) {
-    return await page.waitForFunction(t => {
-        return JSON.parse(localStorage['react-todos']).map((todo: any) => todo.title).includes(t);
-    }, title);
-}

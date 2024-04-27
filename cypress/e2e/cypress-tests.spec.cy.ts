@@ -1,3 +1,4 @@
+performance.now()
 describe('New Todo', () => {
     const TODO_ITEMS: string[] = [
         'Book doctor appointment',
@@ -359,3 +360,5 @@ describe('New Todo', () => {
         });
     });
 });
+
+performance.now()
